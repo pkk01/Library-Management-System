@@ -18,14 +18,14 @@ public class Admin_TablesManager {
 
     private void createTableUsers() {
         try {
-            Connection conn = DriverManager.getConnection(url + db, username, password);
+            Connection connection = DriverManager.getConnection(url + db, username, password);
             String query = "create table Users "
                     + "(UserID int primary key, "
                     + "UserName varchar (30) not null, "
                     + "BookID int not null, "
                     + "FOREIGN KEY (BookID) REFERENCES Books(bookid))";
-            Statement stm = conn.createStatement();
-            stm.execute(query);
+            Statement statement = connection.createStatement();
+            statement.execute(query);
             System.out.println("Table added successfully");
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -34,10 +34,10 @@ public class Admin_TablesManager {
 
     private void createTableBooks() {
         try {
-            Connection conn = DriverManager.getConnection(url + db, username, password);
+            Connection connection = DriverManager.getConnection(url + db, username, password);
             String query = "Create table Books (BookID int primary key, BookName varchar (30) not null, YOP date not null)";
-            Statement stm = conn.createStatement();
-            boolean check = stm.execute(query);
+            Statement statement = connection.createStatement();
+            boolean check = statement.execute(query);
             if (check)
                 System.out.println("Done");
             else

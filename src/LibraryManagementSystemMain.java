@@ -1,9 +1,11 @@
 import java.sql.SQLException;
 import java.util.Scanner;
 
+// main class to call out all the operation from different classes
+
 public class LibraryManagementSystemMain {
     public static void main(String[] pk) throws SQLException {
-        LibraryManagement lm = new LibraryManagement();
+        LibraryManagement libraryManagement = new LibraryManagement();
         Scanner sc = new Scanner(System.in);
         boolean runner = true;
         while (runner) {
@@ -16,7 +18,8 @@ public class LibraryManagementSystemMain {
             System.out.print("Enter your choice: ");
             int choice = sc.nextInt();
             switch (choice) {
-                case 1: // add books
+                // add books
+                case 1:
 
                     System.out.print("Enter Book ID: ");
                     int bID = sc.nextInt();
@@ -25,31 +28,42 @@ public class LibraryManagementSystemMain {
                     String bTitle = sc.nextLine();
                     System.out.print("Enter Year of publication: ");
                     int bYOP = sc.nextInt();
-                    lm.addBook(bID, bTitle, bYOP);
+                    libraryManagement.addBook(bID, bTitle, bYOP);
                     break;
 
-                case 2: // update books
-                    // add method
+                // update books
+                case 2:
+
+                    // passing the same scanner object to clear the buffer and loop should not be
+                    // terminated after execution
+                    libraryManagement.updateBook(sc);
                     break;
-                case 3: // to delete book
-                    System.out.print("Enter Book ID to delete");
+
+                // to delete book
+                case 3:
+                    System.out.print("Enter Book ID to delete: ");
                     int bookID = sc.nextInt();
-                    lm.deleteBook(bookID);
+                    libraryManagement.deleteBook(bookID);
                     break;
-                case 4: // check book availability -->  boolean
+
+                // check book availability --> boolean
+                case 4:
 
                     System.out.print("Enter Book ID to search: ");
                     int bookid = sc.nextInt();
-                    boolean isPresent = lm.isBookPresent(bookid);
+                    boolean isPresent = libraryManagement.isBookPresent(bookid);
                     if (isPresent)
                         System.out.println("This Book is available");
                     else
                         System.out.println("Sorry This Book is currently not available");
                     break;
 
-                case 5: // display all books
-                    lm.showBooks();
+                // display all books
+                case 5:
+                    libraryManagement.showBooks();
                     break;
+
+                // exiting the while loop
                 case 6:
                     System.out.println("Bye and keep learning!!");
                     runner = false;

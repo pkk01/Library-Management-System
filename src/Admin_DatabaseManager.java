@@ -13,11 +13,11 @@ public class Admin_DatabaseManager {
             String url = "jdbc:postgresql://localhost:5432/";
             String username = "postgres";
             String password = "ADMIN123";
-            Connection conn = DriverManager.getConnection(url, username, password);
+            Connection connection = DriverManager.getConnection(url, username, password);
 
-            Statement stm = conn.createStatement();
+            Statement statement = connection.createStatement();
             String query = "Create database LibraryManagement";
-            stm.execute(query);
+            statement.execute(query);
             System.out.println("Database Created successfully");
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -25,7 +25,7 @@ public class Admin_DatabaseManager {
     }
 
     public static void main(String[] pk) {
-        Admin_DatabaseManager ad = new Admin_DatabaseManager();
-        ad.createDatabase();
+        Admin_DatabaseManager adminDatabaseManager = new Admin_DatabaseManager();
+        adminDatabaseManager.createDatabase();
     }
 }
