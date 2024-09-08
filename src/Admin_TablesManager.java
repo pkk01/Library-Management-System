@@ -12,7 +12,7 @@ public class Admin_TablesManager {
     public static void main(String[] pk) {
         Admin_TablesManager tablesManger = new Admin_TablesManager();
 
-        // tablesManger.createTableBooks();
+        tablesManger.createTableBooks();
         tablesManger.createTableUsers();
     }
 

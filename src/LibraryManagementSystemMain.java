@@ -33,7 +33,8 @@ public class LibraryManagementSystemMain {
                     // add method
                     break;
                 case 4: // display all books
-                    // add method
+                    lm.showBooks();
+                    break;
                 case 5:
                     System.out.println("Bye and keep learning");
                     runner = false;
@@ -44,5 +45,6 @@ public class LibraryManagementSystemMain {
             }
 
         }
+        sc.close();
     }
 }
