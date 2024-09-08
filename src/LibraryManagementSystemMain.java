@@ -66,6 +66,7 @@ public class LibraryManagementSystemMain {
                 // exiting the while loop
                 case 6:
                     System.out.println("Bye and keep learning!!");
+                    System.out.println("\n    ~DEVELOPED BY PK");
                     runner = false;
                     break;
 
