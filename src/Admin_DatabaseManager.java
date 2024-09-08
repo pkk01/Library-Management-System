@@ -20,7 +20,7 @@ public class Admin_DatabaseManager {
             stm.execute(query);
             System.out.println("Database Created successfully");
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 

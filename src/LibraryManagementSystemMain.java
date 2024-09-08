@@ -29,9 +29,17 @@ public class LibraryManagementSystemMain {
                 case 2: // update books
                     // add method
                     break;
-                case 3: // check book availability --> can be boolean
-                    // add method
+                case 3: // check book availability -->  boolean
+
+                    System.out.print("Enter Book ID to search: ");
+                    int bookID = sc.nextInt();
+                    boolean isPresent = lm.isBookPresent(bookID);
+                    if (isPresent)
+                        System.out.println("This Book is available");
+                    else
+                        System.out.println("Sorry This Book is currently not available");
                     break;
+
                 case 4: // display all books
                     lm.showBooks();
                     break;
@@ -43,7 +51,6 @@ public class LibraryManagementSystemMain {
                 default:
                     System.out.println("Please choose correct option");
             }
-
         }
         sc.close();
     }

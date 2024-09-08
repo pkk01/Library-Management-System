@@ -29,7 +29,7 @@ public class LibraryManagement {
 
     public void showBooks() {
         try {
-            Connection conn = DriverManager.getConnection(url+db,username,password);
+            Connection conn = DriverManager.getConnection(url + db, username, password);
             Statement stm = conn.createStatement();
             String query = "Select * from books";
             ResultSet rs = stm.executeQuery(query);
@@ -41,7 +41,21 @@ public class LibraryManagement {
             }
 
         } catch (SQLException e) {
-            throw  new RuntimeException(e);
+            throw new RuntimeException(e);
         }
+    }
+
+    public boolean isBookPresent(int bookID) {
+        try {
+            Connection conn = DriverManager.getConnection(url + db, username, password);
+            String query = "select 1 from books where bookid = ?";
+            PreparedStatement pstm = conn.prepareStatement(query);
+            pstm.setInt(1, bookID);
+            ResultSet rs = pstm.executeQuery();
+            return rs.next();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }
