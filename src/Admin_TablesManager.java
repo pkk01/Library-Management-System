@@ -13,7 +13,7 @@ public class Admin_TablesManager {
         Admin_TablesManager tablesManger = new Admin_TablesManager();
 
         tablesManger.createTableBooks();
-        tablesManger.createTableUsers();
+//        tablesManger.createTableUsers();
     }
 
     private void createTableUsers() {
@@ -35,13 +35,14 @@ public class Admin_TablesManager {
     private void createTableBooks() {
         try {
             Connection connection = DriverManager.getConnection(url + db, username, password);
-            String query = "Create table Books (BookID int primary key, BookName varchar (30) not null, YOP date not null)";
+            String query = "Create table Books "
+                    + "(BookID int primary key, "
+                    + "BookName varchar (30) not null, "
+                    + "BookAuthor varchar (30) not null, "
+                    + "YOP int not null)";
             Statement statement = connection.createStatement();
-            boolean check = statement.execute(query);
-            if (check)
-                System.out.println("Done");
-            else
-                System.out.println("Gotcha");
+            statement.execute(query);
+            System.out.println("Gotcha");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

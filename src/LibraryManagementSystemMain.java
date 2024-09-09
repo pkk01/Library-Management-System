@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class LibraryManagementSystemMain {
     public static void main(String[] pk) throws SQLException {
-        LibraryManagement libraryManagement = new LibraryManagement();
+        LibraryManagement_Books libraryManagement = new LibraryManagement_Books();
         Scanner sc = new Scanner(System.in);
         boolean runner = true;
         while (runner) {
@@ -26,9 +26,11 @@ public class LibraryManagementSystemMain {
                     sc.nextLine();
                     System.out.print("Enter Book Title: ");
                     String bTitle = sc.nextLine();
+                    System.out.print("Enter Author Name: ");
+                    String bAuthor = sc.nextLine();
                     System.out.print("Enter Year of publication: ");
                     int bYOP = sc.nextInt();
-                    libraryManagement.addBook(bID, bTitle, bYOP);
+                    libraryManagement.addBook(bID, bTitle, bAuthor, bYOP);
                     break;
 
                 // update books
