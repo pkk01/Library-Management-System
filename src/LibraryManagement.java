@@ -114,7 +114,7 @@ public class LibraryManagement {
 
             if (choice == 1) {
 
-                System.out.println("Enter new name: ");
+                System.out.print("Enter new name: ");
                 String newBookName = scanner.nextLine();
 
                 update(bid, "bookname", newBookName);
@@ -122,7 +122,7 @@ public class LibraryManagement {
                 System.out.println("Book Name changed successfully");
 
             } else if (choice == 2) {
-                System.out.println("Enter new YOP: ");
+                System.out.print("Enter new YOP: ");
                 int newYOP = scanner.nextInt();
 
                 update(bid, "yop", newYOP);

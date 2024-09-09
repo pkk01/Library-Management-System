@@ -14,7 +14,7 @@ public class LibraryManagementSystemMain {
             System.out.println("3. Delete Book");
             System.out.println("4. Check Availability Book");
             System.out.println("5. Show available books");
-            System.out.println("6. Exit to main menu: ");
+            System.out.println("6. Exit to main menu ");
             System.out.print("Enter your choice: ");
             int choice = sc.nextInt();
             switch (choice) {
