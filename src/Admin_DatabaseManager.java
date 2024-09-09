@@ -12,7 +12,7 @@ public class Admin_DatabaseManager {
         try {
             String url = "jdbc:postgresql://localhost:5432/";
             String username = "postgres";
-            String password = "ADMIN123";
+            String password = "*****";
             Connection connection = DriverManager.getConnection(url, username, password);
 
             Statement statement = connection.createStatement();

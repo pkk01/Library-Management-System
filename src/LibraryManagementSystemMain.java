@@ -38,6 +38,7 @@ public class LibraryManagementSystemMain {
 
                     // passing the same scanner object to clear the buffer and loop should not be
                     // terminated after execution
+                    // use when another switch case is required called method
                     libraryManagement.updateBook(sc);
                     break;
 

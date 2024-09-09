@@ -12,15 +12,18 @@ public class LibraryManagement_Books {
     public String url = "jdbc:postgresql://localhost:5432/";
     public String db = "librarymanagement";
     public String username = "postgres";
-    public String password = "ADMIN123";
+    public String password = "******";
 
     // method to add books
     public void addBook(int bID, String bTitle, String bAuthor, int bYOP) {
-        try {
-            Connection connection = DriverManager.getConnection(url + db, username, password);
-            String query = "insert into books values "
-                    + "(?,?,?,?)";
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
+        String query = "insert into books values "
+                + "(?,?,?,?)";
+
+        // added try-with-resources to avoid leaking of resource and automatically closed them
+
+        try (Connection connection = DriverManager.getConnection(url + db, username, password);
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
             preparedStatement.setInt(1, bID);
             preparedStatement.setString(2, bTitle);
             preparedStatement.setString(3, bAuthor);
@@ -28,20 +31,20 @@ public class LibraryManagement_Books {
             preparedStatement.execute();
 
             System.out.println("\nBook Added Successfully\n");
-
+            connection.close();
+            preparedStatement.close();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.err.println("Error adding book: " + e.getMessage());
         }
-
     }
 
     // method to display all books
     public void showBooks() {
-        try {
-            Connection connection = DriverManager.getConnection(url + db, username, password);
-            Statement statement = connection.createStatement();
-            String query = "Select * from books order by bookid";
-            ResultSet resultSet = statement.executeQuery(query);
+        String query = "Select * from books order by bookid";
+        try (Connection connection = DriverManager.getConnection(url + db, username, password);
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
+
             while (resultSet.next()) {
                 if (resultSet.isFirst()) {
                     // use this to display data in tabular form
@@ -56,42 +59,43 @@ public class LibraryManagement_Books {
             System.out.println();
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.err.println("Error displaying Books: " + e.getMessage());
         }
     }
 
     // boolean method to check if the book is present or not
     public boolean isBookPresent(int bookID) {
-        try {
-            Connection connection = DriverManager.getConnection(url + db, username, password);
-            String query = "select 1 from books where bookid = ?";
+        String query = "select 1 from books where bookid = ?";
+        try (Connection connection = DriverManager.getConnection(url + db, username, password);
+             PreparedStatement preparedStatement = connection.prepareStatement(query);
+             ResultSet resultSets = preparedStatement.executeQuery()) {
 
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, bookID);
-
-            ResultSet resultSets = preparedStatement.executeQuery();
             return resultSets.next();
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.err.println("Error checking book: " + e.getMessage());
+            return false;
         }
     }
 
     // method to delete the book ny bookID
     public void deleteBook(int bookID) {
+        String query = "delete from books "
+                + "where bookid = ?";
         if (isBookPresent(bookID)) {
-            try {
+            try (Connection connection = DriverManager.getConnection(url + db, username, password);
+                 PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-                Connection connection = DriverManager.getConnection(url + db, username, password);
-                String query = "delete from books "
-                        + "where bookid = ?";
-                PreparedStatement preparedStatement = connection.prepareStatement(query);
                 preparedStatement.setInt(1, bookID);
                 int affectedRows = preparedStatement.executeUpdate();
                 if (affectedRows > 0)
                     System.out.println("Book with ID " + bookID + " is deleted successfully");
+                else
+                    System.out.println("No book found with ID " + bookID);
+
             } catch (Exception e) {
-                throw new RuntimeException(e);
+                System.err.println("Error deleting book: " + e.getMessage());
             }
         } else
             System.out.println("Book with ID " + bookID + " is not present in DB");
@@ -145,14 +149,13 @@ public class LibraryManagement_Books {
 
     // to update book using generic method
     public <T> void update(int BookID, String column, T newValue) {
-        try {
-            Connection connection = DriverManager.getConnection(url + db, username, password);
+        String query = "update books "
+                + "set " + column + " = ? "
+                + " where bookid = ? ";
 
-            String query = "update books "
-                    + "set " + column + " = ? "
-                    + " where bookid = ? ";
+        try (Connection connection = DriverManager.getConnection(url + db, username, password);
+             PreparedStatement preparedStatement = connection.prepareStatement(query);) {
 
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setObject(1, newValue);
             preparedStatement.setInt(2, BookID);
 
@@ -164,7 +167,7 @@ public class LibraryManagement_Books {
                 System.out.println("Executed successfully");
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.err.println("Error updating book: " + e.getMessage());
         }
     }
 }

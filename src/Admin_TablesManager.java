@@ -7,7 +7,7 @@ public class Admin_TablesManager {
     String url = "jdbc:postgresql://localhost:5432/";
     String db = "librarymanagement";
     String username = "postgres";
-    String password = "ADMIN123";
+    String password = "******";
 
     public static void main(String[] pk) {
         Admin_TablesManager tablesManger = new Admin_TablesManager();
