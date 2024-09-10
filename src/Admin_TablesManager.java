@@ -4,14 +4,17 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Admin_TablesManager {
-    String url = "jdbc:postgresql://localhost:5432/";
-    String db = "librarymanagement";
-    String username = "postgres";
-    String password = "******";
+
+    // using same credential as of Books table to avoid repetition
+    // and to maintain security for password leak
+    LibraryManagement_Books libraryManagementBooks = new LibraryManagement_Books();
+    String url = libraryManagementBooks.url;
+    String db = libraryManagementBooks.db;
+    String username = libraryManagementBooks.username;
+    String password = libraryManagementBooks.password;
 
     public static void main(String[] pk) {
         Admin_TablesManager tablesManger = new Admin_TablesManager();
-
         tablesManger.createTableBooks();
 //        tablesManger.createTableUsers();
     }

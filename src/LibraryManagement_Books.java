@@ -12,7 +12,7 @@ public class LibraryManagement_Books {
     public String url = "jdbc:postgresql://localhost:5432/";
     public String db = "librarymanagement";
     public String username = "postgres";
-    public String password = "******";
+    public String password = "ADMIN123";
 
     // method to add books
     public void addBook(int bID, String bTitle, String bAuthor, int bYOP) {
