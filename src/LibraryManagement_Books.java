@@ -12,7 +12,7 @@ public class LibraryManagement_Books {
     public String url = "jdbc:postgresql://localhost:5432/";
     public String db = "librarymanagement";
     public String username = "postgres";
-    public String password = "ADMIN123";
+    public String password = "*******";
 
     // method to add books
     public void addBook(int bID, String bTitle, String bAuthor, int bYOP) {
@@ -123,6 +123,7 @@ public class LibraryManagement_Books {
                 System.out.print("Enter new Book name: ");
                 String newBookName = scanner.nextLine();
 
+                // calling update method with the parameters
                 update(bid, "bookname", newBookName);
 
                 System.out.println("Book Name changed successfully");
@@ -154,7 +155,7 @@ public class LibraryManagement_Books {
                 + " where bookid = ? ";
 
         try (Connection connection = DriverManager.getConnection(url + db, username, password);
-             PreparedStatement preparedStatement = connection.prepareStatement(query);) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setObject(1, newValue);
             preparedStatement.setInt(2, BookID);
