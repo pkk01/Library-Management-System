@@ -11,18 +11,21 @@ public class LibraryManagement_Books {
 
     public String url = "jdbc:postgresql://localhost:5432/";
     public String db = "librarymanagement";
-    public String username = "postgres";
-    public String password = "*******";
+
+    // add username and password directly
+    public String username = System.getenv("DB_USERNAME");
+    public String password = System.getenv("DB_PASSWORD");
 
     // method to add books
     public void addBook(int bID, String bTitle, String bAuthor, int bYOP) {
         String query = "insert into books values "
                 + "(?,?,?,?)";
 
-        // added try-with-resources to avoid leaking of resource and automatically closed them
+        // added try-with-resources to avoid leaking of resource and automatically
+        // closed them
 
         try (Connection connection = DriverManager.getConnection(url + db, username, password);
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setInt(1, bID);
             preparedStatement.setString(2, bTitle);
@@ -42,8 +45,8 @@ public class LibraryManagement_Books {
     public void showBooks() {
         String query = "Select * from books order by bookid";
         try (Connection connection = DriverManager.getConnection(url + db, username, password);
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query)) {
+                Statement statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery(query)) {
 
             while (resultSet.next()) {
                 if (resultSet.isFirst()) {
@@ -53,7 +56,7 @@ public class LibraryManagement_Books {
                 }
                 System.out.printf("%-15d %-30s %-20s %-10d %n", resultSet.getInt(1),
                         resultSet.getString(2), resultSet.getString(3),
-                        resultSet.getInt(4));  // Assuming YOP is in the 4th column
+                        resultSet.getInt(4)); // Assuming YOP is in the 4th column
             }
             // to add extra space after the output
             System.out.println();
@@ -67,8 +70,8 @@ public class LibraryManagement_Books {
     public boolean isBookPresent(int bookID) {
         String query = "select 1 from books where bookid = ?";
         try (Connection connection = DriverManager.getConnection(url + db, username, password);
-             PreparedStatement preparedStatement = connection.prepareStatement(query);
-             ResultSet resultSets = preparedStatement.executeQuery()) {
+                PreparedStatement preparedStatement = connection.prepareStatement(query);
+                ResultSet resultSets = preparedStatement.executeQuery()) {
 
             preparedStatement.setInt(1, bookID);
             return resultSets.next();
@@ -85,7 +88,7 @@ public class LibraryManagement_Books {
                 + "where bookid = ?";
         if (isBookPresent(bookID)) {
             try (Connection connection = DriverManager.getConnection(url + db, username, password);
-                 PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                    PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
                 preparedStatement.setInt(1, bookID);
                 int affectedRows = preparedStatement.executeUpdate();
@@ -155,7 +158,7 @@ public class LibraryManagement_Books {
                 + " where bookid = ? ";
 
         try (Connection connection = DriverManager.getConnection(url + db, username, password);
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setObject(1, newValue);
             preparedStatement.setInt(2, BookID);

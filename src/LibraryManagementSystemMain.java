@@ -5,16 +5,19 @@ import java.util.Scanner;
 
 public class LibraryManagementSystemMain {
     public static void main(String[] pk) throws SQLException {
-        LibraryManagement_Books libraryManagement = new LibraryManagement_Books();
+        LibraryManagement_Books libraryManagementBooks = new LibraryManagement_Books();
+        LibraryManagement_Users libraryManagementUsers = new LibraryManagement_Users();
         Scanner sc = new Scanner(System.in);
         boolean runner = true;
         while (runner) {
+
             System.out.println("1. Add Book");
             System.out.println("2. Update Book");
             System.out.println("3. Delete Book");
             System.out.println("4. Check Availability Book");
             System.out.println("5. Show available books");
-            System.out.println("6. Exit to main menu ");
+            System.out.println("6. Manage User");
+            System.out.println("7. Exit to main menu ");
             System.out.print("Enter your choice: ");
             int choice = sc.nextInt();
             switch (choice) {
@@ -30,7 +33,7 @@ public class LibraryManagementSystemMain {
                     String bAuthor = sc.nextLine();
                     System.out.print("Enter Year of publication: ");
                     int bYOP = sc.nextInt();
-                    libraryManagement.addBook(bID, bTitle, bAuthor, bYOP);
+                    libraryManagementBooks.addBook(bID, bTitle, bAuthor, bYOP);
                     break;
 
                 // update books
@@ -39,14 +42,14 @@ public class LibraryManagementSystemMain {
                     // passing the same scanner object to clear the buffer and loop should not be
                     // terminated after execution
                     // use when another switch case is required called method
-                    libraryManagement.updateBook(sc);
+                    libraryManagementBooks.updateBook(sc);
                     break;
 
                 // to delete book
                 case 3:
                     System.out.print("Enter Book ID to delete: ");
                     int bookID = sc.nextInt();
-                    libraryManagement.deleteBook(bookID);
+                    libraryManagementBooks.deleteBook(bookID);
                     break;
 
                 // check book availability --> boolean
@@ -54,7 +57,7 @@ public class LibraryManagementSystemMain {
 
                     System.out.print("Enter Book ID to search: ");
                     int bookid = sc.nextInt();
-                    boolean isPresent = libraryManagement.isBookPresent(bookid);
+                    boolean isPresent = libraryManagementBooks.isBookPresent(bookid);
                     if (isPresent)
                         System.out.println("This Book is available");
                     else
@@ -63,11 +66,15 @@ public class LibraryManagementSystemMain {
 
                 // display all books
                 case 5:
-                    libraryManagement.showBooks();
+                    libraryManagementBooks.showBooks();
                     break;
 
-                // exiting the while loop
                 case 6:
+//                   // method to manage the users
+                    libraryManagementUsers.manageUser(sc);
+
+                    // exiting the while loop
+                case 7:
                     System.out.println("Bye and keep learning!!");
                     System.out.println("\n    ~DEVELOPED BY PK");
                     runner = false;
